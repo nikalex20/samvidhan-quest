@@ -87,13 +87,29 @@ function shuffle(items) {
     .map(({ item }) => item);
 }
 
+function shuffleArray(items) {
+  const shuffled = [...items];
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]];
+  }
+
+  return shuffled;
+}
+
 function pickQuestions(modeId, categoryId) {
   const mode = quizModes.find((item) => item.id === modeId) || quizModes[0];
   const pool = mode.id === "mock" || categoryId === "mixed"
     ? questionBank
     : questionBank.filter((question) => question.category === categoryId);
 
-  return shuffle(pool).slice(0, Math.min(mode.questionCount, pool.length));
+  return shuffle(pool)
+    .slice(0, Math.min(mode.questionCount, pool.length))
+    .map((question) => ({
+      ...question,
+      shuffledOptions: shuffleArray(question.options),
+    }));
 }
 
 function calculateBadges({ categoryId, modeId, previousProgress, quizCorrect, quizTotal, articleCorrect, xp }) {
@@ -802,7 +818,7 @@ function Quiz({ currentIndex, currentMode, currentQuestion, onAnswer, onContinue
         </div>
 
         <div className="mt-5 grid gap-3">
-          {currentQuestion.options.map((option) => {
+          {(currentQuestion.shuffledOptions || currentQuestion.options).map((option) => {
             const correct = option === currentQuestion.answer;
             const selected = option === selectedOption;
             const state = showFeedback && correct
