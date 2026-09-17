@@ -34,3 +34,51 @@ Users navigate through core constitutional themes (Fundamental Rights, Preamble,
 ---
 
 ## 🏗️ Architecture & Data Flow
+┌───────────────────────────┐
+                  │      User Interaction     │
+                  └─────────────┬─────────────┘
+                                │ (Select Answer)
+                                ▼
+                  ┌───────────────────────────┐
+                  │    State Validation Logic │
+                  └─────────────┬─────────────┘
+                                │
+        ┌───────────────────────┴───────────────────────┐
+        ▼                                               ▼
+┌───────────────────────────┐                   ┌───────────────────────────┐
+│     Correct Selection     │                   │    Incorrect Selection    │
+│  • Increment Score (+1)   │                   │  • Flag Incorrect State   │
+│  • Unlock Next Challenge  │                   │  • Display Article Detail │
+└───────────┬───────────────┘                   └───────────┬───────────────┘
+│                                               │
+└───────────────────────┬───────────────────────┘
+▼
+┌───────────────────────────┐
+│  DOM Re-render via State  │
+└───────────────────────────┘
+
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend Framework:** React.js / Modern JavaScript (ES6+)
+* **Styling & Layout:** CSS3 (Media Queries, Flexbox, CSS Grid)
+* **Hosting & CI/CD:** Vercel
+* **Version Control:** Git & GitHub
+
+---
+
+## 📂 Project Structure
+
+```text
+samvidhan-quest/
+├── public/              # Static assets, icons, and civic badges
+├── src/
+│   ├── components/      # Modular UI units (Navbar, QuestionCard, ScoreBoard)
+│   ├── data/            # Constitutional question bank, article references
+│   ├── styles/          # Responsive layout and thematic styling
+│   ├── App.jsx          # Core routing and high-level state orchestration
+│   └── index.js         # Root entry point
+├── package.json         # Dependencies and project scripts
+└── README.md            # Documentation
