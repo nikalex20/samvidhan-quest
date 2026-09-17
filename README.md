@@ -33,21 +33,6 @@ Users navigate through core constitutional themes (Fundamental Rights, Preamble,
 
 ---
 
-## 🏗️ Architecture & Data Flow
-## 🏗️ Architecture & Data Flow
-
-```mermaid
-flowchart TD
-    A[User Selection: Choose Option] --> B{State Validation Engine}
-    B -- Correct --> C[Increment Score +1]
-    B -- Incorrect --> D[Flag Incorrect & Load Article Reference]
-    C --> E[Advance Question / Re-render DOM]
-    D --> E
-    E --> F{All Questions Completed?}
-    F -- No --> A
-    F -- Yes --> G[Display Final Scorecard & Analytics]
-```
-
 ## 🛠️ Tech Stack
 
 * **Frontend Framework:** React.js / Modern JavaScript (ES6+)
